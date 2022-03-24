@@ -6,4 +6,5 @@
 HTML, JS, CSS, Shopify Liquid
 
 # STEPS TO FOLLOW
-Copy & paste this file in sections folder of your shopify theme
+1. Copy & paste this file in sections folder of your shopify theme
+2. Add Photo and link products to it from Shopify Portal
