@@ -1,0 +1,519 @@
+
+<script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function(){
+    $('.ifp-inner').slick({
+      dots: false,
+      infinite: false,
+      speed: 300,
+      slidesToShow: 4,
+      slidesToScroll: 4,
+      nextArrow: '<button class="slick-next next-arrow icon icon--next"><span class="visuallyhidden">Next slides</span></button>',
+      prevArrow: '<button class="slick-prev prev-arrow icon icon--prev"><span class="visuallyhidden">Previous slides</span></button>',
+      responsive: [
+        {
+          breakpoint: 991,
+          settings: {
+            slidesToShow: 3,
+            slidesToScroll: 3
+          }
+        },
+        {
+          breakpoint: 767,
+          settings: {
+            slidesToShow: 2,
+            slidesToScroll: 2
+          }
+        },
+        {
+          breakpoint: 480,
+          settings: {
+            slidesToShow: 1,
+            slidesToScroll: 1
+          }
+        }
+      ]
+    });
+
+    $('.stl-right--slider').slick({
+      dots: true,
+      infinite: false,
+      speed: 300,
+      arrows: false,
+      slidesToShow: 1,
+      slidesToScroll: 1,
+      customPaging : function(slider, i) {
+        return '<span></span>';
+      }
+    });
+    var $scale,$transform,i,e,n,s,a,o,r,l;
+    $('.stl-dot').click(function(){
+      var $index = $(this).data('index');
+      $('.stl-right--slider').slick('slickGoTo',$index);
+      $('.stl-dot').removeClass('stl-dot--active');
+      $(this).addClass('stl-dot--active');
+      if($(window).width() <= 991){
+        if(!$('.stl-wrapper').hasClass('zoomed-in')){
+          $scale = 1+($('.stl-left').width()/$(window).width());
+          $('html,body').addClass('no-scroll');
+          $('.stl-wrapper').addClass('zoomed-in');
+
+          i = document.querySelector('.stl-left');
+          e = document.querySelector('.stl-right--inner')
+          n = window.innerWidth / (i.offsetWidth - 2 * parseInt(window.getComputedStyle(i).paddingLeft));
+          s = Math.round(i.offsetHeight * n),
+            a = Math.round(Math.max(s - (window.innerHeight - e.offsetHeight), 0)),
+            o = s - a,
+            r = Math.round(-(i.getBoundingClientRect().top - (s - i.offsetHeight) / 2)),
+            l = Math.round(r - a);
+        }
+        e = document.querySelector('.stl-dot.stl-dot--active')
+        i = Math.round((e.offsetTop + e.offsetHeight / 2) * n),
+          s = Math.round(i - o / 2),
+          a = Math.min(Math.max(r - s, l), r);
+
+        $('.stl-left').css('transform','translateY('+a+'px) scale('+n+')');
+      }
+
+    });
+    $('.stl-right-header span').click(function(){
+      $('html,body').removeClass('no-scroll');
+      $('.stl-wrapper').removeClass('zoomed-in');
+
+      $('.stl-left').css('transform','scale(1)');
+
+    });
+    $('.stl-right--slider').on('afterChange', function(event, slick, currentSlide, nextSlide){
+      var $index = currentSlide;
+      if(!$('.stl-dot[data-index="'+$index+'"]').hasClass('stl-dot--active')){
+        $('.stl-dot').removeClass('stl-dot--active');
+        $('.stl-dot[data-index="'+$index+'"]').addClass('stl-dot--active').trigger('click');
+      }
+    });
+  });
+</script>
+
+<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
+
+
+<style>
+  a {
+  	outline: none;
+  }
+  
+  .index--shop-the-look {
+    margin: {{ section.settings.section-margin }}px 0;
+  }
+  
+  .stl-wrapper {
+    max-width: 880px;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;    
+    margin-top: 50px;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .index--shop-the-look .top-title {
+    text-align: center;
+    font-size: 15px;
+    font-weight: normal;
+    margin-bottom: 10px;
+  }
+
+  .index--shop-the-look .subtitle {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 55px;
+  }
+  .stl-left {
+    width: 50%;
+  }
+  .stl-left {
+    padding: 0 10px;
+    transition: all .3s ease;
+  }
+  .stl-item {
+    display: flex;
+    align-items: center;
+    padding: 0;
+  }
+  .stl-right {
+    width: 40%;
+    position: relative;
+  }
+
+  .stl-right--inner .stl-right--slider {
+    position: static;
+    display: none;
+  }
+  .stl-right--inner .stl-right--slider.slick-initialized {
+    display: block;
+  }
+  .stl-right {
+    text-align: center;
+  }
+  .stl-item .title {
+    font-weight: normal;
+    margin: 10px 0;
+    font-size: 15px;
+  }
+
+  .stl-item .price {
+    font-weight: normal;
+    font-size: 15px;
+  }
+  .stl-btn {
+    margin: 0 auto;
+    margin-top: 20px;
+    display: inline-block;
+}
+
+  .stl-btn:hover {
+    color: #000;
+  }
+
+  .stl-btn:hover::before {
+    transform-origin: right center;
+    transform: scale(0, 1);
+  }
+  .stl-right--inner .slick-dots {
+    bottom: unset;
+    top: calc(100% + 20px);
+    left: 50%;
+    transform: translateX(-50%);
+}
+  .stl-right--inner .slick-dots span {
+    width: 10px;
+    height: 10px;
+    border: 2px solid #d9d9d9;
+    display: inline-block;
+    border-radius: 100%;
+    cursor: pointer;
+  }
+
+  .stl-right--inner .slick-dots .slick-active span {
+    background: #000;
+    border-color: #000;
+  }
+  @-webkit-keyframes shopTheLookDotKeyframe {
+    0% {
+      transform: scale(1)
+    }
+    50% {
+      transform: scale(1.05)
+    }
+    100% {
+      transform: scale(1)
+    }
+  }
+
+  @keyframes shopTheLookDotKeyframe {
+    0% {
+      transform: scale(1)
+    }
+    50% {
+      transform: scale(1.05)
+    }
+    100% {
+      transform: scale(1)
+    }
+  }
+  .stl-left--inner {
+    position: relative;
+  }
+
+  .stl-left .stl-dot {
+    position: absolute;
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    margin: -8px 0 0 -8px;
+    background: #ffffff;
+    border-radius: 100%;
+    box-shadow: 0 1px 10px rgba(0,0,0,0.25);
+    cursor: pointer;
+    z-index: 1;
+    transform: scale(1);
+    transition: transform 0.25s ease-in-out;
+  }
+  .stl-left .stl-dot.stl-dot--active,.stl-left .stl-dot:hover  {
+    transform: scale(1.5);
+  }
+  .stl-left .stl-dot::after {
+    position: absolute;
+    content: '';
+    width: 40px;
+    height: 40px;
+    left: -12px;
+    top: -12px;
+    border-radius: 100%;
+    background: rgba(255,255,255,0.4);
+    -webkit-animation: 1.4s shopTheLookDotKeyframe ease-in-out infinite;
+    animation: 1.4s shopTheLookDotKeyframe ease-in-out infinite;
+  }
+  .stl-img img {
+    margin: auto;
+    max-height: 350px;
+  }
+  .stl-mobile-btns {
+    display: none;
+  }
+  .stl-right-header{
+    display: none; 
+  }
+  .no-scroll {
+    overflow: hidden !important;
+  }
+  @media(max-width: 991px){
+    .stl-right--inner {
+      opacity: 0;
+      visibility: hidden;
+      z-index: -20;
+      transition: opacity .3s ease;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background: #fff;
+      -webkit-transform: translateY(100%);
+      transform: translateY(100%);
+      padding-bottom: 30px;
+    }
+    .stl-wrapper.zoomed-in .stl-right--inner {
+      opacity: 1;
+      visibility: visible;
+      z-index: 999;
+      -webkit-transform: translateY(0);
+      transform: translateY(0);
+    }
+    .stl-wrapper.zoomed-in .stl-left {
+      z-index: 999;
+    }
+    .stl-left, .stl-right {
+      width: 100%;
+      max-width: 500px;
+    }
+    .stl-left--inner {
+      transition: transform .4s ease;
+    }
+    
+    .stl-mobile-btns {
+      display: block;
+      max-width: 300px;
+      margin: 30px auto;
+    }
+
+    .stl-mobile-btns a {
+    }
+    .stl-wrapper {
+      padding: 0 20px;
+      justify-content: center;
+    }
+    .stl-right-header {
+      border-bottom: 1px solid #eee;
+      position: relative;
+      margin-bottom: 20px;
+      display: block;
+    }
+
+    .stl-right-header span svg {
+      width: 16px;
+      height: 16px;
+    }
+
+    .stl-right-header .subtitle {
+      font-size: 16px;
+      padding: 15px 0;
+      font-weight: normal;
+      margin: 0;
+    }
+
+    .stl-right-header span {
+      position: absolute;
+      left: 15px;
+      top: 50%;
+      margin-top: -8px;
+      cursor: pointer;
+    }
+    .stl-item .stl-btn {
+      display: none;
+    }
+  }
+  @media(max-width: 767px){
+    .index--shop-the-look .subtitle {
+      font-size: 35px;
+    }
+    .stl-right-header .subtitle {
+      font-size: 16px;
+    }
+    
+    .stl-img img {
+    	max-height: 200px;
+    }
+  }
+  
+  .slick-dots {
+    position: absolute;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-justify-content: center;
+    -ms-flex-pack: justify;
+        justify-content: center;
+    z-index: 9;
+}
+  
+  .slick-dots li {
+    margin: 0 !important;
+}
+</style>
+
+<div class="index--shop-the-look">
+  {% if section.settings.title != blank %}<h4 class="top-title">{{ section.settings.title }}</h4>{% endif %}
+  {% if section.settings.subtitle != blank %}<h3 class="subtitle">{{ section.settings.subtitle }}</h3>{% endif %}
+  <div class="stl-wrapper">
+    <div class="stl-left">
+      <div class="stl-left--inner">
+        {% if section.settings.image != blank %}<img src="{{ section.settings.image | img_url: '1024x' }}">{% endif %}
+        {% for block in section.blocks %}
+        {% if block.settings.product != blank %}
+          <span class="stl-dot {% if forloop.first %}stl-dot--active{% endif %}" data-index="{{ forloop.index0 }}" style="top:{{ block.settings.top }}%;left:{{ block.settings.left }}%;"></span>
+        {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+    <div class="stl-right">
+      <div class="stl-right--inner">
+        <div class="stl-right-header">
+          <span>
+            <svg class="Icon Icon--close" role="presentation" viewBox="0 0 16 14">
+              <path d="M15 0L1 14m14 0L1 0" stroke="currentColor" fill="none" fill-rule="evenodd"></path>
+            </svg>
+          </span>
+          {% if section.settings.subtitle != blank %}<h3 class="subtitle">{{ section.settings.subtitle }}</h3>{% endif %}
+        </div>
+        <div class="stl-right--slider">
+          {% for block in section.blocks %}
+          {% if block.settings.product != blank %}
+          {% assign thisProduct = all_products[block.settings.product] %}
+          <div class="stl-item">
+            <a href="{{ thisProduct.url }}">
+            <div class="stl-img">
+              <img src="{{ thisProduct | img_url: '300x' }}">
+            </div>
+            <h4 class="title">{{ thisProduct.title }}</h4>
+            <h5 class="price">{{ thisProduct.price | money }}</h5>
+            </a>
+            <a href="{{ thisProduct.url }}" class="{% if section.settings.button-class %}{{ section.settings.button-class }}{% endif %}">{{ section.settings.cta_text }}</a>
+          </div>
+          {% endif %}
+          {% endfor %}
+        </div>
+      </div>
+      <div class="stl-mobile-btns">
+        <a href="javascript:void(0);" onclick="$('.stl-dot--active').trigger('click')" data-index="{{ forloop.index0 }}" {% if forloop.first %}style="display:block;"{% endif %} class="{% if section.settings.button-class %}{{ section.settings.button-class }}{% endif %}">{{ section.settings.cta_text_mobile }}</a>
+      </div>
+    </div>
+  </div>  
+</div>
+
+{% schema %}
+  {
+    "name": "Shop the Look",
+    "settings": [
+		  {
+             "type": "header",
+             "content": "Section Created by SimplifyMyShop.com"
+          },
+		  {
+             "type": "paragraph",
+             "content": "Preview may break during editing. Hit Save in the Customizer to reload."
+          },
+          {
+            "id": "title",
+            "type": "text",
+            "label": "Title"
+          },
+          {
+            "id": "subtitle",
+            "type": "text",
+            "label": "Subtitle"
+          },
+		  {
+            "id": "cta_text",
+            "type": "text",
+            "label": "Button Text",
+			"default": "VIEW PRODUCT"
+          },
+		  {
+            "id": "cta_text_mobile",
+            "type": "text",
+            "label": "Mobile Button Text",
+			"default": "VIEW PRODUCTS"
+          },
+		  {
+            "id": "button-class",
+            "type": "textarea",
+            "label": "Button Class",
+			"info": "Seperate with spaces"
+          },
+          {
+            "id": "image",
+            "type": "image_picker",
+            "label": "Image"
+          },
+		  {
+              "type":   "range",
+              "id":     "section-margin",
+              "min":       0,
+              "max":       100,
+              "step":      5,
+              "unit":      "px",
+              "label":     "Section Top/Bottom Margin",
+              "default":   0
+          }
+	],
+	"blocks": [
+      {
+        "type": "product",
+        "name": "Prodct",
+        "settings": [
+          {
+            "id": "product",
+            "type": "product",
+            "label": "Product"
+          },
+          {
+            "type": "range",
+            "id": "top",
+            "label": "Position from Top",
+            "step": 1,
+            "min": 0,
+            "max": 100,
+            "unit": "%",
+            "default": 0
+          },
+          {
+            "type": "range",
+            "id": "left",
+            "label": "Position from Left",
+            "step": 1,
+            "min": 0,
+            "max": 100,
+            "unit": "%",
+            "default": 0
+          }
+        ]
+      }
+    ],
+  "presets": [
+        {
+          "category": "Shop the Look",
+          "name": "Home"
+        }
+      ]
+  }
+{% endschema %}
+
